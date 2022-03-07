@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: ${POD_LABEL}
+spec:
+    restartPolicy: Never
+    priorityClassName: high-priority
+    tolerations:
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+    hostAliases:
+        - ip: "127.0.0.1"
+          hostnames:
+              - "php"
+
+    volumes:
+        - name: composer-home
+          hostPath:
+              path: /home/dev/.composer
+        - name: minio-cli
+          hostPath:
+            path: ${MINIO_PATH_TO_BINARY}
+        - name: minio-config-dir
+          hostPath:
+            path: ${MINIO_PATH_CONFIG_DIR}
+
+    containers:
+        - name: app
+          image: ${REGISTRY_HOST}/${PROJECT_NAME}/php-fpm-app:${IMAGE_TAG}
+          imagePullPolicy: Always
+          volumeMounts:
+              - name: minio-cli
+                mountPath: ${MINIO_PATH_TO_BINARY}
+                readOnly: true
+              - name: minio-config-dir
+                mountPath: /root/.minio_cli/
+              - name: composer-home
+                mountPath: /root/.composer
+          command:
+              - /bin/bash
+              - -c
+              - ${TESTING_COMMAND}

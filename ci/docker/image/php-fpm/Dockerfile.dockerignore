@@ -1,0 +1,6 @@
+bamboo-specs/
+dev/
+vendor/
+.git
+.gitattribute
+.gitignore

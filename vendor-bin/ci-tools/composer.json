@@ -1,0 +1,7 @@
+{
+    "name": "ecentria/ci-tools",
+    "description": "Ecentria continuous integration tools",
+    "require-dev": {
+        "deployer/deployer": "v7.0.0-beta.24"
+    }
+}

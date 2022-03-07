@@ -1,0 +1,29 @@
+POST http://localhost:8080/api/requests
+Content-Type: application/json
+
+{
+  "userId": 1154,
+  "createdAt": "2022-03-06T09:58:38.984Z",
+  "updatedAt": "2022-03-06T09:58:38.984Z",
+  "newVariantId": 100,
+  "oldVariantId": 2000,
+  "fields": [
+    {
+      "title": "Variant Name",
+      "variantPropertyName": "name",
+      "side": true
+    },
+    {
+      "title": "Related Accessories",
+      "variantPropertyName": "Variant.VariantRelations",
+      "side": false
+    },
+    {
+      "title": "Images",
+      "variantPropertyName": "Variant.Images",
+      "side": true
+    }
+  ]
+}
+
+###

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config ../../vendor-bin/test-tools/vendor/vimeo/psalm/config.xsd"
+    errorBaseline="baseline.xml"
+    findUnusedVariablesAndParams="true"
+    findUnusedPsalmSuppress="true"
+    findUnusedCode="true"
+>
+    <projectFiles>
+        <directory name="../../src" />
+        <directory name="../../templates" />
+        <directory name="../../tests" />
+        <ignoreFiles>
+            <directory name="../../vendor" />
+            <directory name="../../vendor-bin" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="../../tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="../../tests"/>
+                <directory name="../../src/Controller"/>
+                <directory name="../../DoctrineMigrations"/>
+            </errorLevel>
+        </UnusedClass>
+    </issueHandlers>
+    <ignoreExceptions>
+        <class name="Exception"/>
+        <class name="LogicException"/>
+        <class name="RuntimeException"/>
+    </ignoreExceptions>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>../../var/cache/dev/App_KernelDevDebugContainer.xml</containerXml>
+        </pluginClass>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
+</psalm>

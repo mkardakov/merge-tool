@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "@hotwired/stimulus": "^3.0.1",
+    "@symfony/stimulus-bridge": "^3.0.0",
+    "core-js": "3",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "yarn": "^1.22.17"
+  },
+  "scripts": {
+    "build": "babel src -d lib"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
+    "@symfony/webpack-encore": "^1.8.1",
+    "webpack-notifier": "^1.6.0"
+  }
+}

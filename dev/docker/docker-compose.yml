@@ -1,0 +1,39 @@
+volumes:
+  database-data:
+services:
+  api-skeleton-php:
+    build:
+      context: ./image/php-fpm
+      dockerfile: PHP8.Dockerfile # use PHP8.Dockerfile or Dockerfile
+    container_name: php-app
+    volumes:
+      - ../../:/var/www/app/project
+    working_dir: /var/www/app/project
+    environment:
+      PHP_IDE_CONFIG: "serverName=api_skeleton"
+      DATABASE_HOST: "api-skeleton-mysql"
+
+  api-skeleton-nginx:
+    build:
+      context: ../../ci/docker/image/nginx
+    depends_on:
+      - api-skeleton-php
+    ports:
+      - "8080:80"
+      - "8443:443"
+    container_name: nginx
+    volumes:
+      - ../../:/var/www/app/project
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_PASSWORD: $DATABASE_PASSWORD
+      MYSQL_DATABASE: $DATABASE_NAME
+      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_RANDOM_ROOT_PASSWORD: 1
+    volumes:
+    - ./database-data:/var/lib/mysql

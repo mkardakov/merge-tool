@@ -1,0 +1,11 @@
+{
+    "name": "ecentria/testing-tools",
+    "description": "Ecentria testing tools. PHPUnit, Psalm, ect",
+    "require-dev": {
+        "vimeo/psalm": "^4.8.0",
+        "psalm/plugin-symfony": "^2.4.0",
+        "psalm/plugin-phpunit": "^0.16.1",
+        "phpunit/phpunit": "^9.5.7",
+        "symfony/phpunit-bridge": "^5.3"
+    }
+}

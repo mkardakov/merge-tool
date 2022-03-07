@@ -1,0 +1,33 @@
+/.idea/
+/local-setup.sh
+/behat.yml
+/composer.phar
+/bin/.phpunit
+/bin/phpunit
+/var/log/*
+!/var/cache/.gitkeep
+!/var/log/.gitkeep
+
+###> symfony/framework-bundle ###
+.env.local
+.env.local.php
+.env.*.local
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/vendor-bin/**/vendor
+###< symfony/framework-bundle ###
+###> docker compose ###
+/dev/docker/database-data
+###> docker compose ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

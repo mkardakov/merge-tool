@@ -1,0 +1,3 @@
+ecentria_logging:
+    application_name: merge-tool
+    root_dir: '%kernel.project_dir%/'

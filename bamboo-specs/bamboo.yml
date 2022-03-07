@@ -1,0 +1,77 @@
+version: 2
+plan:
+    project-key: SER
+    key: EAS
+    name: Ecentria API Skeleton
+stages:
+    - Build:
+          jobs:
+              - Build
+    - Run tests:
+          jobs:
+              - Psalm
+              - PHPUnit
+
+Build:
+    tasks:
+        - script:
+              - export REGISTRY_HOST="${bamboo.kubernetes_cluster.docker_registry.harbor.host}"
+              - export BUILD_COMMIT="${bamboo.repository.revision.number}"
+              - export ROOT_DIR="$(pwd)"
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export BRANCH="${bamboo.repository.git.branch}"
+              - export SHORT_PLAN_KEY="${bamboo.shortPlanKey}"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/kaniko.sh
+
+    final-tasks:
+        - script:
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export TESTING_TYPE="kaniko"
+              - export MINIO_CLEANUP="no"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/testing-cleanup.sh
+Psalm:
+    tasks:
+        - script:
+              - export REGISTRY_HOST="${bamboo.kubernetes_cluster.docker_registry.harbor.host}"
+              - export BUILD_COMMIT="${bamboo.repository.revision.number}"
+              - export ROOT_DIR="$(pwd)"
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export BRANCH="${bamboo.repository.git.branch}"
+              - export SHORT_PLAN_KEY="${bamboo.shortPlanKey}"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/testing-psalm.sh
+        - test-parser:
+              type: junit
+              test-results: "**/test-reports/psalm-testing/*.xml"
+
+    final-tasks:
+        - script:
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export TESTING_TYPE="psalm-testing"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/testing-cleanup.sh
+
+PHPUnit:
+    tasks:
+        - script:
+              - export REGISTRY_HOST="${bamboo.kubernetes_cluster.docker_registry.harbor.host}"
+              - export BUILD_COMMIT="${bamboo.repository.revision.number}"
+              - export ROOT_DIR="$(pwd)"
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export BRANCH="${bamboo.repository.git.branch}"
+              - export SHORT_PLAN_KEY="${bamboo.shortPlanKey}"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/testing-unit.sh
+
+        - test-parser:
+              type: junit
+              test-results: "**/test-reports/unit-testing/*.xml"
+
+    final-tasks:
+        - script:
+              - export BUILD_KEY="${bamboo.buildResultKey}"
+              - export TESTING_TYPE="unit-testing"
+              - chmod +x ./ci/kubernetes/action/*
+              - ./ci/kubernetes/action/testing-cleanup.sh

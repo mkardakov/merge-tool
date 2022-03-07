@@ -1,0 +1,18 @@
+monolog:
+    handlers:
+        main:
+            type: rotating_file
+            max_files: 3
+            filename_format: '{date}-{filename}'
+            formatter: ecentria_logging.formatter
+            path: '%kernel.logs_dir%/%kernel.environment%.json.log.dev'
+            level: debug
+        console:
+            type:         rotating_file
+            path:         "%kernel.logs_dir%/console_%kernel.environment%.json.log.dev"
+            formatter:    ecentria_logging.formatter
+            level:        debug
+            filename_format: '{date}-{filename}'
+            max_files:    3
+            channels:
+                - 'console'
